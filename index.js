@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const http = require('http');
 
 const config = require('./config.json');
 require('dotenv').config();
@@ -18,5 +19,5 @@ client.on('message', message => {
 client.login(process.env.CLIENT_TOKEN);
 
 setInterval(function () { // Keeps the bot awake
-    http.get('http://cor0n4.herokuapp.com');
+    http.get('https://cor0n4.herokuapp.com/');
 }, 300000);
