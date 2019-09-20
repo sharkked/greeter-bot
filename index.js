@@ -19,5 +19,10 @@ client.on('message', message => {
 client.login(process.env.CLIENT_TOKEN);
 
 setInterval(function () { // Keeps the bot awake
-    http.get('http://cor0n4.herokuapp.com/');
-}, 300000);
+	try {
+		http.get('http://cor0n4.herokuapp.com/');
+		l.log("ping");
+	} catch(e) {
+		l.error(e);
+	}
+}, 30000);
