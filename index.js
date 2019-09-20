@@ -16,3 +16,7 @@ client.on('message', message => {
 });
 
 client.login(process.env.CLIENT_TOKEN);
+
+setInterval(function () { // Keeps the bot awake
+    http.get('http://cor0n4.herokuapp.com');
+}, 300000);
