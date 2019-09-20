@@ -14,6 +14,10 @@ client.on('message', message => {
 	if (message.member.highestRole.name == '@everyone') {
 		message.member.addRole(config.roles.visitor);
 	}
+
+	if (message.author.id == process.env.OWNER && message.content == ".!acc") {
+		message.channel.send("All new visitors must introduce themselves in #introductions for clearance to enter the lab.");
+	}
 });
 
 client.login(process.env.CLIENT_TOKEN);
