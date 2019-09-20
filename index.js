@@ -16,7 +16,9 @@ client.on('message', message => {
 	}
 
 	if (message.author.id == process.env.OWNER && message.content == ".!acc") {
-		message.channel.send("All new visitors must introduce themselves in #introductions for clearance to enter the lab.");
+		message.channel.send("All new visitors must introduce themselves in " + 
+		message.guild.channels.find(channel => channel.name === "introductions").toString() + 
+		" for clearance to enter the lab.");
 	}
 });
 
