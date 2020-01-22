@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const http = require('http');
+const https = require('https');
 
 const config = require('./config.json');
 require('dotenv').config();
@@ -14,7 +14,11 @@ client.on('message', message => {
 	if (message.member.highestRole.name == '@everyone') {
 		message.member.addRole(config.roles.visitor);
 	}
-
+  
+  if (message.author.id == process.env.OWNER && message.content == ".!test") {
+    message.channel.send("Basic systems functional.");
+  }
+  
 	if (message.author.id == process.env.OWNER && message.content == ".!acc") {
 		message.channel.send("All new visitors must introduce themselves in " + 
 		message.guild.channels.find(channel => channel.name === "introductions").toString() + 
@@ -26,7 +30,7 @@ client.login(process.env.CLIENT_TOKEN);
 
 setInterval(function () { // Keeps the bot awake
 	try {
-		http.get('http://cor0n4.herokuapp.com/');
+		https.get('https://cor0n4.glitch.me');
 		l.log("ping");
 	} catch(e) {
 		l.error(e);
