@@ -1,38 +1,24 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
-const https = require('https');
+const client = new Discord.Client({ 
+	intents: [ "GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES"],
+	fetchAllMembers: true,
+});
 
 const config = require('./config.json');
 require('dotenv').config();
 
-const l = require('./util/logger.js');
+const logger = require('./tools/logger.js');
 
-
-client.on('ready', () => {l.log('Cor.0N4 online.')});
-
-client.on('message', message => {
-	if (message.member.highestRole.name == '@everyone') {
-		message.member.addRole(config.roles.visitor);
-	}
-  
-  if (message.author.id == process.env.OWNER && message.content == ".!test") {
-    message.channel.send("Basic systems functional.");
-  }
-  
-	if (message.author.id == process.env.OWNER && message.content == ".!acc") {
-		message.channel.send("All new visitors must introduce themselves in " + 
-		message.guild.channels.find(channel => channel.name === "introductions").toString() + 
-		" for clearance to enter the lab.");
-	}
+client.on('ready', async (client) => {
+	logger.info("Logged in as " + client.user.tag);
 });
 
-client.login(process.env.CLIENT_TOKEN);
+client.on('guildMemberAdd', (member) => {
+	logger.info("Joined: " + member);
+});
 
-setInterval(function () { // Keeps the bot awake
-	try {
-		https.get('https://cor0n4.glitch.me');
-		l.log("ping");
-	} catch(e) {
-		l.error(e);
-	}
-}, 30000);
+client.on("messageCreate", async (message) => {
+	logger.info("Message: " + message.content);
+})
+
+client.login(process.env.CLIENT_TOKEN);
